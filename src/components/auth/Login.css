@@ -1,0 +1,20 @@
+#login {
+  text-align: center;
+}
+#login h1 {
+  font-size: 3rem;
+  margin: 0;
+  padding: 16px;
+}
+#form-container {
+  margin: auto;
+}
+.form-group {
+  margin: 16px;
+}
+.is-invalid {
+  border: 2px solid red;
+}
+.error {
+  font-size: 11px;
+}
