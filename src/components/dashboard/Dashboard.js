@@ -24,7 +24,7 @@ class Dashboard extends Component {
 
     axios
       .get(`http://localhost:5000/api/posts/${handle}/posts`)
-      .then(posts => this.setState({ posts: posts.data }));
+      .then(posts => this.setState({ posts: posts.data.reverse() }));
   }
 
   render() {
