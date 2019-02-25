@@ -5,4 +5,19 @@
   text-align: center;
   color: white;
   margin: 16px 8px;
+  padding: 16px 0;
+}
+.profile-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.profile-row img {
+  margin: 8px 32px;
+}
+.profile-row p {
+  margin: 8px;
+}
+.profile-image {
+  border-radius: 50%;
 }

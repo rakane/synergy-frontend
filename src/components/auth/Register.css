@@ -47,3 +47,20 @@ input {
 #submit:hover {
   background-color: #69adf8;
 }
+#photo-upload {
+  color: white;
+  font-size: 1.25rem;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.choose-file-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+#choose-file-wrapper input[type='file'] {
+  font-size: 1rem;
+}

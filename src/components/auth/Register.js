@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { registerUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -24,9 +25,12 @@ class Register extends Component {
       facebook: '',
       linkedin: '',
       instagram: '',
-      errors: {}
+      errors: {},
+      selectedFile: null,
+      uploaded: false
     };
     this.onChange = this.onChange.bind(this);
+    this.onChangeImage = this.onChangeImage.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -46,8 +50,21 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  onChangeImage(e) {
+    this.setState({
+      selectedFile: e.target.files[0],
+      loaded: 0
+    });
+  }
+
   onSubmit(e) {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    const name = this.state.handle;
+
+    formData.append('file', this.state.selectedFile, name);
 
     const newUser = {
       name: this.state.name,
@@ -66,10 +83,15 @@ class Register extends Component {
     };
 
     this.props.registerUser(newUser, this.props.history);
+
+    //Upload image
+    axios
+      .post('http://localhost:5000/api/users/upload-image', formData)
+      .catch(err => console.log(err));
   }
 
   render() {
-    const { errors } = this.state;
+    const { uploaded, errors } = this.state;
 
     return (
       <div id="register">
@@ -110,7 +132,7 @@ class Register extends Component {
               error={errors.password}
             />
             <TextFieldGroup
-              type="text"
+              type="password"
               placeholder="* Confirm Password"
               name="password2"
               value={this.state.password2}
@@ -172,6 +194,17 @@ class Register extends Component {
               value={this.state.instagram}
               onChange={this.onChange}
             />
+            <div id="photo-upload">
+              <h3>Upload Profile Photo</h3>
+              <div id="choose-file-wrapper">
+                <input
+                  id="choose-photo-input"
+                  type="file"
+                  onChange={this.onChangeImage}
+                />
+              </div>
+              {uploaded && <p>Uploaded</p>}
+            </div>
             <input id="submit" type="submit" className="submit-btn" />
           </form>
         </div>
