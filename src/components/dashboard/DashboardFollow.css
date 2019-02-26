@@ -13,3 +13,14 @@
 #follow-title {
   font-size: 1.5rem;
 }
+
+@media (max-width: 1200px) {
+  #follow {
+    width: 20vw;
+  }
+}
+@media (max-width: 950px) {
+  #follow {
+    width: 35vw;
+  }
+}

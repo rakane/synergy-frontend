@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
+import DrawerToggleButton from '../SideDrawer/DrawerToggleButton';
 
 import './Navbar.css';
 class Navbar extends Component {
@@ -35,6 +36,9 @@ class Navbar extends Component {
     );
     const authLinksLeft = (
       <div id="left-nav">
+        <div className="hamburger-menu">
+          <DrawerToggleButton click={this.props.drawerClickHandler} />
+        </div>
         <Link className="nav-item" to="/home">
           Home
         </Link>
@@ -50,7 +54,7 @@ class Navbar extends Component {
         <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">
           Logout
         </a>
-        <Link id="nav-post-btn" className="nav-item" to="/post">
+        <Link id="nav-post-btn" to="/post">
           Post
         </Link>
       </div>

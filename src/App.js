@@ -8,6 +8,8 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import store from './store';
 
 import Navbar from './components/layout/Navbar';
+import Backdrop from './components/Backdrop/Backdrop';
+import SideDrawer from './components/SideDrawer/SideDrawer';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -37,18 +39,50 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      SideDrawerOpen: false
+    };
+  }
+
+  drawerToggleClickhandler = () => {
+    this.setState(prevState => {
+      return { SideDrawerOpen: !prevState.SideDrawerOpen };
+    });
+  };
+
+  backdropClickHandler = () => {
+    this.setState({ SideDrawerOpen: false });
+  };
+
+  closeClickHandler = () => {
+    this.setState({ SideDrawerOpen: false });
+  };
+
   render() {
+    let backdrop;
+
+    if (this.state.SideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler} />;
+    }
+
     return (
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Navbar />
+            <Navbar drawerClickHandler={this.drawerToggleClickhandler} />
+            <SideDrawer
+              show={this.state.SideDrawerOpen}
+              click={this.closeClickHandler}
+            />
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profile" component={Profile} />
             </div>
+            {backdrop}
           </div>
         </Router>
       </Provider>

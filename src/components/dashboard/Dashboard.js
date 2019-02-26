@@ -20,11 +20,17 @@ class Dashboard extends Component {
     this.state = {
       posts: [],
       following: [],
-      centerState: 'Posts'
+      centerState: 'Posts',
+      width: 0,
+      height: 0
     };
     this.handleCenterChange = this.handleCenterChange.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+
     this.props.getCurrentProfile();
 
     const { handle } = this.props.auth.user;
@@ -36,6 +42,14 @@ class Dashboard extends Component {
     axios
       .get(`http://localhost:5000/api/users/handle/${handle}`)
       .then(user => this.setState({ following: user.following }));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
   }
 
   handleCenterChange(type) {
@@ -61,7 +75,6 @@ class Dashboard extends Component {
         break;
     }
 
-    const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
@@ -71,8 +84,26 @@ class Dashboard extends Component {
     } else {
       dashboardContent = (
         <div id="dashboard-container">
+          {this.state.width <= 600 && (
+            <div id="top-profile-container">
+              <DashboardProfile
+                name={profile.name}
+                handle={profile.handle}
+                bio={profile.bio}
+                website={profile.website}
+                location={profile.location}
+                twitter={profile.twitter}
+                facebook={profile.facebook}
+                youtube={profile.youtube}
+                linkedin={profile.linkedin}
+                instagram={profile.instagram}
+                followers={profile.followers}
+                following={profile.following}
+              />
+            </div>
+          )}
           <div id="dashboard-stats">
-            <div className="spacer">
+            <div className="btn-spacer">
               <Link className="edit-profile-btn" to="/edit-profile">
                 Edit Profile
               </Link>
@@ -109,20 +140,31 @@ class Dashboard extends Component {
             <div className="spacer" />
           </div>
           <div id="lower-content">
-            <DashboardProfile
-              name={profile.name}
-              handle={profile.handle}
-              bio={profile.bio}
-              website={profile.website}
-              location={profile.location}
-              twitter={profile.twitter}
-              facebook={profile.facebook}
-              youtube={profile.youtube}
-              linkedin={profile.linkedin}
-              instagram={profile.instagram}
-              followers={profile.followers}
-              following={profile.following}
-            />
+            <div id="left-col">
+              {this.state.width > 600 && (
+                <DashboardProfile
+                  name={profile.name}
+                  handle={profile.handle}
+                  bio={profile.bio}
+                  website={profile.website}
+                  location={profile.location}
+                  twitter={profile.twitter}
+                  facebook={profile.facebook}
+                  youtube={profile.youtube}
+                  linkedin={profile.linkedin}
+                  instagram={profile.instagram}
+                  followers={profile.followers}
+                  following={profile.following}
+                />
+              )}
+              {this.state.width <= 950 && this.state.width > 600 && (
+                <DashboardFollow
+                  id="dashboard-follow"
+                  following={profile.following}
+                  profile={profile}
+                />
+              )}
+            </div>
             <div id="center">
               {this.state.centerState === 'Posts' && (
                 <DashboardPosts
@@ -140,7 +182,13 @@ class Dashboard extends Component {
                 <DashboardFollowing following={profile.following} />
               )}
             </div>
-            <DashboardFollow following={profile.following} profile={profile} />
+            {this.state.width > 950 && (
+              <DashboardFollow
+                id="dashboard-follow"
+                following={profile.following}
+                profile={profile}
+              />
+            )}
           </div>
         </div>
       );

@@ -56,8 +56,10 @@ class Profilecard extends Component {
             publicId={'profile/' + this.state.handle}
             crop="scale"
           />
-          <h1 className="name">{this.state.name}</h1>
-          <h2 className="handle">@{this.state.handle}</h2>
+          <div className="title-row">
+            <h1 className="name">{this.state.name}</h1>
+            <h2 className="handle">@{this.state.handle}</h2>
+          </div>
         </div>
         <div className="follow-btn-container">
           <button className="follow-btn">{buttonContent}</button>
