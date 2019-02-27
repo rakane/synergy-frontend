@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 200px;
 }
 #inner {
   display: flex;
@@ -67,5 +67,13 @@
   }
   .stat-btn {
     margin: 8px 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .edit-profile-btn {
+    font-size: 0.75rem;
+    width: 20vw;
+    text-align: center;
   }
 }

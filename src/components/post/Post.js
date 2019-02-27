@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Image } from 'cloudinary-react';
+import { Link } from 'react-router-dom';
 
 import LikeButton from '../../assets/outline-thumb_up-24px.svg';
 import CommentButton from '../../assets/outline-comment-24px.svg';
@@ -18,10 +19,21 @@ class Post extends Component {
       id: this.props.id,
       likes: this.props.likes,
       comments: this.props.comments,
-      user: this.props.user
+      user: this.props.user,
+      alreadyLiked: false
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleComment = this.handleComment.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.likes !== undefined) {
+      nextProps.likes.map(like => {
+        if (like.handle === nextProps.user.handle) {
+          this.setState({ alreadyLiked: true });
+        }
+      });
+    }
   }
 
   handleLike(e) {
@@ -31,10 +43,25 @@ class Post extends Component {
       handle: this.state.user.handle,
       name: this.state.user.name
     };
-    axios
-      .post(`http://localhost:5000/api/posts/like/${this.state.id}`, payload)
-      .then(post => console.log(post))
-      .catch(err => console.log(err));
+
+    if (this.state.alreadyLiked) {
+      axios
+        .post(
+          `http://localhost:5000/api/posts/unlike/${this.state.id}`,
+          payload
+        )
+        .then(post => console.log(post))
+        .catch(err => console.log(err));
+
+      this.setState({ alreadyLiked: false });
+    } else {
+      axios
+        .post(`http://localhost:5000/api/posts/like/${this.state.id}`, payload)
+        .then(post => console.log(post))
+        .catch(err => console.log(err));
+
+      this.setState({ alreadyLiked: true });
+    }
   }
 
   handleComment(e) {
@@ -44,10 +71,19 @@ class Post extends Component {
   render() {
     let likesCount;
     let commentsCount;
+    let likeStyle = {};
 
     if (this.state.likes === undefined) {
       likesCount = 0;
-    } else likesCount = this.state.likes.length;
+    } else {
+      likesCount = this.state.likes.length;
+    }
+
+    if (this.state.alreadyLiked) {
+      likeStyle = {
+        backgroundColor: '#69adf8'
+      };
+    }
 
     if (this.state.comments === undefined) {
       commentsCount = 0;
@@ -56,11 +92,13 @@ class Post extends Component {
     return (
       <div className="post">
         <div className="title">
-          <Image
-            className="post-profile-photo"
-            cloudName="dozvpglka"
-            publicId={'profile/' + this.state.handle}
-          />
+          <Link to={'/profile/' + this.state.handle}>
+            <Image
+              className="post-profile-photo"
+              cloudName="dozvpglka"
+              publicId={'profile/' + this.state.handle}
+            />
+          </Link>
           <div>
             <h1 className="name">{this.state.name}</h1>
             <h2 className="handle">@{this.state.handle}</h2>
@@ -70,7 +108,11 @@ class Post extends Component {
         <p className="text">{this.state.text}</p>
         <div className="btn-row">
           <div className="like">
-            <button className="like-btn" onClick={this.handleLike}>
+            <button
+              className="like-btn"
+              onClick={this.handleLike}
+              style={likeStyle}
+            >
               <img src={LikeButton} alt="like button" />
             </button>
             <p className="count">{likesCount}</p>

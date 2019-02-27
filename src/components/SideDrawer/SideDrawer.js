@@ -23,13 +23,25 @@ class SideDrawer extends Component {
 
     let authLinks = (
       <div id="side-drawer-list">
-        <Link className="side-drawer-link" to="/home">
+        <Link
+          className="side-drawer-link"
+          to="/home"
+          onClick={this.props.click}
+        >
           Home
         </Link>
-        <Link className="side-drawer-link" to="/profile">
+        <Link
+          className="side-drawer-link"
+          to="/profile"
+          onClick={this.props.click}
+        >
           Profile
         </Link>
-        <Link className="side-drawer-link" to="/settings">
+        <Link
+          className="side-drawer-link"
+          to="/settings"
+          onClick={this.props.click}
+        >
           Settings
         </Link>
         <a onClick={this.onLogoutClick.bind(this)} className="side-drawer-link">

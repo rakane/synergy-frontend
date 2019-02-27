@@ -17,6 +17,10 @@ class DashboardPosts extends Component {
     this.setState({ user: this.props.user });
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ posts: nextProps.posts });
+  }
+
   render() {
     let posts = this.state.posts;
     return (

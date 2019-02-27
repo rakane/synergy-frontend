@@ -13,7 +13,10 @@ import SideDrawer from './components/SideDrawer/SideDrawer';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import Profile from './components/dashboard/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
+import Home from './components/home/Home';
+import Profile from './components/profile/Profile';
+
 import './App.css';
 import { clearCurrentProfile } from './actions/profileActions';
 
@@ -80,7 +83,9 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/profile" component={Dashboard} />
+              <Route exact path="/profile/:id" component={Profile} />
+              <Route exact path="/home" component={Home} />
             </div>
             {backdrop}
           </div>

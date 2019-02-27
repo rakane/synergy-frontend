@@ -16,3 +16,10 @@
     width: 55vw;
   }
 }
+
+@media (max-width: 600px) {
+  #dashboard-followers {
+    width: 100vw;
+    margin: 0;
+  }
+}

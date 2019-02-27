@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCurrentProfile } from '../../actions/profileActions';
+import { getProfilePosts, clearCurrentPosts } from '../../actions/postsActions';
 import Spinner from '../common/Spinner';
 import DashboardProfile from './DashboardProfile';
 import DashboardPosts from './DashboardPosts';
@@ -18,7 +19,6 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      posts: [],
       following: [],
       centerState: 'Posts',
       width: 0,
@@ -32,12 +32,11 @@ class Dashboard extends Component {
     window.addEventListener('resize', this.updateWindowDimensions);
 
     this.props.getCurrentProfile();
+    this.props.clearCurrentPosts();
 
     const { handle } = this.props.auth.user;
 
-    axios
-      .get(`http://localhost:5000/api/posts/${handle}/posts`)
-      .then(posts => this.setState({ posts: posts.data.reverse() }));
+    this.props.getProfilePosts(handle);
 
     axios
       .get(`http://localhost:5000/api/users/handle/${handle}`)
@@ -77,9 +76,11 @@ class Dashboard extends Component {
 
     const { profile, loading } = this.props.profile;
 
+    const { posts, postsLoading } = this.props.posts;
+
     let dashboardContent;
 
-    if (profile === null || loading) {
+    if (profile === null || posts === null || loading || postsLoading) {
       dashboardContent = <Spinner />;
     } else {
       dashboardContent = (
@@ -115,7 +116,7 @@ class Dashboard extends Component {
                   onClick={() => this.handleCenterChange('Posts')}
                 >
                   <p className="stat-title">Posts</p>
-                  <p className="stat-num">{this.state.posts.length}</p>
+                  <p className="stat-num">{posts.length}</p>
                 </button>
               </div>
               <div className={'followers-stat'}>
@@ -167,10 +168,7 @@ class Dashboard extends Component {
             </div>
             <div id="center">
               {this.state.centerState === 'Posts' && (
-                <DashboardPosts
-                  posts={this.state.posts}
-                  user={this.props.auth.user}
-                />
+                <DashboardPosts posts={posts} user={this.props.auth.user} />
               )}
               {this.state.centerState === 'Followers' && (
                 <DashboardFollowers
@@ -199,17 +197,20 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  clearCurrentPosts: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
+  getProfilePosts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
-  auth: state.auth
+  auth: state.auth,
+  posts: state.posts
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, getProfilePosts, clearCurrentPosts }
 )(Dashboard);

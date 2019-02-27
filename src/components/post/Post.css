@@ -1,5 +1,6 @@
 .post {
   margin: 8px 12px;
+  margin-top: 0;
   border-bottom: 1px solid #69adf8;
 }
 .title {
