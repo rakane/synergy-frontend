@@ -38,6 +38,10 @@ input {
   background-color: #06192f;
   color: white;
   padding: 4px 8px;
+  outline: none;
+}
+input::placeholder {
+  color: #7f7575;
 }
 #submit {
   margin: 16px;

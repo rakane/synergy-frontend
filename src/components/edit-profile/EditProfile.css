@@ -1,0 +1,22 @@
+#edit-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+#edit-profile-form {
+  margin: 32px;
+  text-align: center;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+#back-arrow {
+  position: absolute;
+  left: 8px;
+  margin-top: 16px;
+  width: 50px;
+  height: 50px;
+}

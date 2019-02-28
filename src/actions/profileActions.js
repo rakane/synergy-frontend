@@ -64,3 +64,21 @@ export const clearTargetProfile = () => {
     type: CLEAR_TARGET_PROFILE
   };
 };
+
+export const updateProfile = (userData, history) => dispatch => {
+  axios
+    .post('http://localhost:5000/api/users/update', userData)
+    .then(res => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      });
+      history.push('/home');
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

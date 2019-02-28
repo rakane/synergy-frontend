@@ -1,0 +1,38 @@
+#search {
+  color: white;
+  background-color: #1d2f44;
+  border: 1px solid #69adf8;
+  border-radius: 50px;
+  padding: 2px 6px;
+  margin: 0 32px;
+  width: 25vw;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+#search-input {
+  border: none;
+  background: none;
+  width: 100%;
+  outline: none;
+}
+#search-input::placeholder {
+  color: #7f7575;
+}
+#submit-img {
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  #submit-img {
+    width: 20px;
+    height: 20px;
+  }
+  #search-input {
+    font-size: 0.75rem;
+  }
+}

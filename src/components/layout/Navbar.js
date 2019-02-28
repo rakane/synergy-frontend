@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
 import { clearCurrentProfile } from '../../actions/profileActions';
 import DrawerToggleButton from '../SideDrawer/DrawerToggleButton';
+import Search from '../search/Search';
 
 import './Navbar.css';
+
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
@@ -50,7 +52,7 @@ class Navbar extends Component {
     //TODO: Profile Picture upload, make logout a tag a image
     const authLinksRight = (
       <div id="right-nav">
-        <input id="search" type="text" placeholder="Search" />
+        <Search />
         <a href="" onClick={this.onLogoutClick.bind(this)} className="nav-link">
           Logout
         </a>
