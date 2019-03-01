@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { getCurrentProfile } from '../../actions/profileActions';
+import {
+  getCurrentProfile,
+  followUser,
+  unfollowUser
+} from '../../actions/profileActions';
 
 import './Profilecard.css';
 
@@ -48,18 +52,15 @@ class Profilecard extends Component {
     };
 
     if (this.state.alreadyFollowed) {
-      axios.post('http://localhost:5000/api/users/unfollow', payload);
+      this.props.unfollowUser(payload);
       this.setState({ alreadyFollowed: false });
     } else {
-      axios.post('http://localhost:5000/api/users/follow', payload);
+      this.props.followUser(payload);
       this.setState({ alreadyFollowed: true });
     }
-    this.props.getCurrentProfile();
   }
 
   render() {
-    const { profile } = this.props.profile;
-
     const { alreadyFollowed } = this.state;
     let buttonContent = 'Follow';
 
@@ -94,7 +95,8 @@ class Profilecard extends Component {
 }
 
 Profilecard.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+  followUser: PropTypes.func.isRequired,
+  unfollowUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -106,5 +108,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { followUser, unfollowUser }
 )(Profilecard);

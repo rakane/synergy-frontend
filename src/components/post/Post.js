@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Image } from 'cloudinary-react';
 import { Link } from 'react-router-dom';
 
-import LikeButton from '../../assets/outline-thumb_up-24px.svg';
+import LikedButton from '../../assets/thumbs-up-filled.svg';
+import LikeButton from '../../assets/thumbs-up.svg';
 import CommentButton from '../../assets/outline-comment-24px.svg';
 
 import './Post.css';
@@ -71,18 +72,11 @@ class Post extends Component {
   render() {
     let likesCount;
     let commentsCount;
-    let likeStyle = {};
 
     if (this.state.likes === undefined) {
       likesCount = 0;
     } else {
       likesCount = this.state.likes.length;
-    }
-
-    if (this.state.alreadyLiked) {
-      likeStyle = {
-        backgroundColor: '#69adf8'
-      };
     }
 
     if (this.state.comments === undefined) {
@@ -108,12 +102,13 @@ class Post extends Component {
         <p className="text">{this.state.text}</p>
         <div className="btn-row">
           <div className="like">
-            <button
-              className="like-btn"
-              onClick={this.handleLike}
-              style={likeStyle}
-            >
-              <img src={LikeButton} alt="like button" />
+            <button className="like-btn" onClick={this.handleLike}>
+              {this.state.alreadyLiked && (
+                <img src={LikedButton} alt="like button" />
+              )}
+              {!this.state.alreadyLiked && (
+                <img src={LikeButton} alt="like button" />
+              )}
             </button>
             <p className="count">{likesCount}</p>
           </div>

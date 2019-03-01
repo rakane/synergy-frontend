@@ -31,6 +31,7 @@ class QuickPost extends Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.submitPost(this.state.text);
+    this.setState({ text: '' });
   }
 
   render() {

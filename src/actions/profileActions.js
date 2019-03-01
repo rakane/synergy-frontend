@@ -82,3 +82,27 @@ export const updateProfile = (userData, history) => dispatch => {
       })
     );
 };
+
+export const followUser = userData => dispatch => {
+  axios
+    .post('http://localhost:5000/api/users/follow', userData)
+    .then(res => dispatch(getCurrentProfile()))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+export const unfollowUser = userData => dispatch => {
+  axios
+    .post('http://localhost:5000/api/users/unfollow', userData)
+    .then(res => dispatch(getCurrentProfile()))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

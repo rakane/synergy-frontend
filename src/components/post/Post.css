@@ -1,6 +1,5 @@
 .post {
   margin: 8px 12px;
-  margin-top: 0;
   border-bottom: 1px solid #69adf8;
 }
 .title {
@@ -49,9 +48,11 @@
 }
 .like-btn {
   margin: 0;
+  outline: none;
 }
 .comment-btn {
   margin: 0;
+  outline: none;
 }
 button {
   background: none;

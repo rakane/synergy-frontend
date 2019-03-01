@@ -17,6 +17,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import EditProfile from './components/edit-profile/EditProfile';
+import CreatePost from './components/create-post/CreatePost';
 
 import './App.css';
 import { clearCurrentProfile } from './actions/profileActions';
@@ -88,6 +89,7 @@ class App extends Component {
               <Route exact path="/profile/:id" component={Profile} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/edit-profile" component={EditProfile} />
+              <Route exact path="/post" component={CreatePost} />
             </div>
             {backdrop}
           </div>
