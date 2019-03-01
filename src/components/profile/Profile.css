@@ -3,3 +3,8 @@
   flex-direction: column;
   align-items: center;
 }
+@media (min-width: 949px) {
+  #posts {
+    margin-top: 16px;
+  }
+}

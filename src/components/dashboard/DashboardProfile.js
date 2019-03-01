@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image } from 'cloudinary-react';
+import { cloudName } from '../../config/keys';
 
 import './DashboardProfile.css';
 
@@ -28,7 +29,7 @@ const DashboardProfile = ({
       <div id="main-info">
         <Image
           className="profile-image"
-          cloudName="dozvpglka"
+          cloudName={cloudName}
           publicId={'profile/' + handle}
           crop="scale"
         />

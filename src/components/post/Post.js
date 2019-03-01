@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Image } from 'cloudinary-react';
 import { Link } from 'react-router-dom';
+import { cloudName } from '../../config/keys';
 
 import LikedButton from '../../assets/thumbs-up-filled.svg';
 import LikeButton from '../../assets/thumbs-up.svg';
@@ -89,7 +90,7 @@ class Post extends Component {
           <Link to={'/profile/' + this.state.handle}>
             <Image
               className="post-profile-photo"
-              cloudName="dozvpglka"
+              cloudName={cloudName}
               publicId={'profile/' + this.state.handle}
             />
           </Link>

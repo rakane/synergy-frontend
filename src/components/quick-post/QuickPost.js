@@ -3,6 +3,7 @@ import { Image } from 'cloudinary-react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { submitPost } from '../../actions/postsActions';
+import { cloudName } from '../../config/keys';
 
 import './QuickPost.css';
 
@@ -35,7 +36,7 @@ class QuickPost extends Component {
   }
 
   render() {
-    const { profile } = this.state;
+    const { profile } = this.props.profile;
 
     let style = {};
 
@@ -48,7 +49,7 @@ class QuickPost extends Component {
         {profile !== undefined && profile !== null && (
           <Image
             className="quick-post-profile-image"
-            cloudName="dozvpglka"
+            cloudName={cloudName}
             publicId={'profile/' + profile.handle}
             crop="scale"
           />

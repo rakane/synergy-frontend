@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { cloudName } from '../../config/keys';
 import {
   getCurrentProfile,
   followUser,
@@ -74,7 +75,7 @@ class Profilecard extends Component {
           <Link to={'/profile/' + this.state.handle}>
             <Image
               className="profilecard-image"
-              cloudName="dozvpglka"
+              cloudName={cloudName}
               publicId={'profile/' + this.state.handle}
               crop="scale"
             />

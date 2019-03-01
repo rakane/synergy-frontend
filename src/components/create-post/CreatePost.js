@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { submitPost } from '../../actions/postsActions';
 import { getCurrentProfile } from '../../actions/profileActions';
+import { cloudName } from '../../config/keys';
 
 import './CreatePost.css';
 
@@ -48,7 +49,7 @@ class CreatePost extends Component {
             <div id="profile-info">
               <Image
                 className="quick-post-profile-image"
-                cloudName="dozvpglka"
+                cloudName={cloudName}
                 publicId={'profile/' + profile.handle}
                 crop="scale"
               />
