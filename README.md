@@ -9,7 +9,7 @@
 1. Complete setup for back end first, [github repo link](https://github.com/rakane/SocialMediaBackEnd)
 2. clone directory and cd into **socialmedia-frontend**
 3. run '**npm i**' in terminal
-4. Create a keys.js file in '**root/src/config**' with the following information: ![alt text](./readme-assets/READMEkeysjs.png)
+4. Create a folder '**config**' in '**root/src**' and inside create a file '**keys.js** with the following information: ![alt text](./readme-assets/READMEkeysjs.png)
 5. run '**npm start**' in root directory
 6. Enjoy!
 
